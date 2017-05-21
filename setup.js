@@ -3,10 +3,7 @@
  */
 import React, {Component} from 'react';
 
-import {
-    StyleSheet
-} from 'react-native';
-import App from './app/app'
+import App from './src/container/CounterDemo'
 export default class setup extends Component {
     render() {
         return (
@@ -14,5 +11,3 @@ export default class setup extends Component {
         );
     }
 }
-
-const styles = StyleSheet.create({});

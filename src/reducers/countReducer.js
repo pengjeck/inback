@@ -1,8 +1,10 @@
 /**
  * Created by pj on 17-5-21.
  */
+import {combineReducers} from 'redux'
+
 let count = 0;
-export default function (state = count, action) {
+function countChange(state = count, action) {
     switch (action.type) {
         case "Increment":
             count++;
@@ -15,3 +17,7 @@ export default function (state = count, action) {
     }
     return count;
 }
+
+export default combineReducers({
+    count: countChange
+})

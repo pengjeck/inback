@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Container, Content, Text, Card, Header, Body, Button, Title, CardItem} from 'native-base';
-import {increment, decrement} from '../actions/index.js';
+import {increment, decrement} from '../actions/counterAction';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 class Counter extends Component {
