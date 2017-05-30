@@ -19,3 +19,9 @@ after two command, you will find the app run on your android phone.
 
 best wish, to you to myself.
 
+## Footer
+in this section, i will set some useful tool with react native. 
+
++ react-native-splash-screen: 程序开始界面
++ react-native-swiper: 滑动介绍的组件
+

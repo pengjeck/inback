@@ -3,11 +3,12 @@
  */
 import React, {Component} from 'react';
 
-import App from './src/container/CounterDemo'
+
+
 export default class setup extends Component {
     render() {
         return (
-            <App/>
+            
         );
     }
 }

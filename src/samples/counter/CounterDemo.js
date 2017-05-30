@@ -3,10 +3,10 @@
  */
 
 import React, {Component} from 'react';
-import allReducers from '../reducers/countReducer';
+import allReducers from './countReducer';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import Counter from '../components/counter.js';
+import Counter from './counter.js';
 const store = createStore(allReducers);
 export default class App extends Component {
     render() {

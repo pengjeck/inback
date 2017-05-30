@@ -3,12 +3,12 @@
  */
 import React, {Component} from 'react';
 import {Container, Content, Text, Card, Header, Body, Button, Title, CardItem} from 'native-base';
-import {increment, decrement} from '../actions/counterAction';
+import {increment, decrement} from './counterAction';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 class Counter extends Component {
     render() {
-        console.log(this.props.count);
+        // console.log(this.props.count);
         return (
             <Container>
                 <Header>
@@ -41,6 +41,15 @@ function mapStateToProps(state) {
     };
 }
 function matchDispatchToProps(dispatch) {
-    return bindActionCreators({increment: increment, decrement: decrement}, dispatch)
+    return bindActionCreators(
+        {
+            increment: increment,
+            decrement: decrement
+        },
+        dispatch
+    )
 }
-export default connect(mapStateToProps, matchDispatchToProps)(Counter);
+export default connect(
+    mapStateToProps,
+    matchDispatchToProps
+)(Counter);
