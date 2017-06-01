@@ -3,10 +3,10 @@
  */
 import React, {Component} from 'react';
 // import StartSlides from './src/components/StartSlides';
-import CompSteps from './src/components/CompSteps';
+import {BasicTest} from './src/components/BasicTest';
 
 export default class setup extends Component {
     render() {
-        return (<CompSteps name="pjzero"/>);
+        return (<BasicTest name="pjzero"/>);
     }
 }
