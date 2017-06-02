@@ -3,10 +3,12 @@
  */
 import React, {Component} from 'react';
 // import StartSlides from './src/components/StartSlides';
-import {BasicTest} from './src/components/BasicTest';
-
+import Open from './src/components/open/open';
 export default class setup extends Component {
-    render() {
-        return (<BasicTest name="pjzero"/>);
-    }
+  render() {
+    console.disableYellowBox = true;
+    return (
+      <Open/>
+    )
+  }
 }

@@ -2,6 +2,13 @@
 #
 .DS_Store
 
+# >>>>>> by pjzero
+
+# the material files. which should be ignore when update the github project.
+src/res/metaMaterial/
+
+# <<<<<< by pjzero
+
 # Xcode
 #
 build/
@@ -24,7 +31,6 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
-build/
 .idea
 .gradle
 local.properties
