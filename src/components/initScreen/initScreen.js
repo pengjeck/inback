@@ -15,9 +15,10 @@ import {
   heightPercentage
 } from '../basic'
 
-export default class Open extends Component {
+export default class InitScreen extends Component {
   openPress() {
-    console.log('press')
+    console.log('pressed');
+    this.props.navigation.navigate('Catalog')
   }
 
   render() {
