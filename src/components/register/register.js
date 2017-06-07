@@ -7,9 +7,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  DeviceEventEmitter,
-  Alert,
-  ToastAndroid
+  ToastAndroid,
+  BackAndroid,
 } from 'react-native'
 
 import React, {
@@ -27,6 +26,10 @@ import {AdultInfo} from '../../config/default'
 export default class Register extends Component {
   // 组件被加载之后
   componentDidMount() {
+    // 解决了需要连续返回两次的情况
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.goBack();
+    })
   }
 
   // 构造函数

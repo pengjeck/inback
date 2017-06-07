@@ -26,7 +26,6 @@ export const Root = StackNavigator(
       screen: Login,
     },
     RegisterRoot: {
-      // # TODO: [bug]进入到register之后需要返回两次才能顺利回到初始界面
       screen: RegisterRoot,
     }
   },
