@@ -49,7 +49,7 @@ export default class AdultInfo extends Component {
     super(props);
     this.state = {
       gender: 1,
-      idCard: '',
+      idCard: '360428199605295333',
       name: ''
     };
 
@@ -67,7 +67,6 @@ export default class AdultInfo extends Component {
   }
 
   onConfirm() {
-    this.setState({idCard: '360428199605295333'});
     if (this.state.idCard.length !== 18) {
       ToastAndroid.show('请检查身份证号码', ToastAndroid.SHORT);
       return;

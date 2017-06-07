@@ -29,17 +29,15 @@ export default class Register extends Component {
     super(props);
     DeviceEventEmitter.addListener('RegisterAdultInfo', (obj) => {
       // TODO: you can do the register some
-      Alert.alert(
-        '提示',
-        JSON.stringify(obj)
-      )
+      ToastAndroid.show(JSON.stringify(obj),
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP);
     });
 
     DeviceEventEmitter.addListener('RegisterChildInfo', (obj) => {
-      Alert.alert(
-        '提示',
-        JSON.stringify(obj)
-      )
+      ToastAndroid.show(JSON.stringify(obj),
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP);
     })
   }
 

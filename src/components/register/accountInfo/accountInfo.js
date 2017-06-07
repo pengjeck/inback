@@ -15,19 +15,9 @@ import {
 } from 'react-native'
 import {
   Input,
-  Text,
   Item,
   Icon,
-  Button,
-  Container,
-  Content,
 } from 'native-base'
-
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel
-} from 'react-native-simple-radio-button';
 
 import React, {
   Component
@@ -51,9 +41,9 @@ export default class AdultInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gender: 1,
-      idCard: '',
-      nickName: ''
+      phoneNum: '12345678912',
+      nickName: '',
+      password: '1234'
     };
 
     this._carousel = null;
@@ -62,17 +52,10 @@ export default class AdultInfo extends Component {
     this.itemHeight = heightPercentage(60);
   }
 
-  onGenderSelected(value) {
-    this.setState((pre, props) => {
-      console.log('pre: ' + pre.gender + '||' + 'new:' + value);
-      return {gender: value}
-    })
-  }
-
   onConfirm() {
-    this.setState({idCard: '360428199605295333'});
-    if (this.state.idCard.length !== 18) {
-      ToastAndroid.show('请检查身份证号码', ToastAndroid.SHORT);
+    // this.setState({idCard: '360428199605295333'});
+    if (this.state.phoneNum.length !== 11) {
+      ToastAndroid.show('请检查手机号码', ToastAndroid.SHORT);
       return;
     }
     DeviceEventEmitter.emit('RegisterChildInfo', {
@@ -105,11 +88,6 @@ export default class AdultInfo extends Component {
         height: this.itemHeight
       }
     });
-
-    let gender_props = [
-      {label: '男', value: 0},
-      {label: '女', value: 1}
-    ];
 
     return (
       <View>
@@ -144,12 +122,26 @@ export default class AdultInfo extends Component {
                 placeholder="电话号码"
                 placeholderTextColor="white"/>
             </Item>
+            <Item style={{
+              marginLeft: widthPercentage(5),
+              marginRight: widthPercentage(5),
+              marginTop: heightPercentage(3)
+            }}>
+              <Icon name="ios-unlock-outline"
+                    style={{color: 'white', fontSize: 28}}/>
+              <Input
+                onChangeText={
+                  (password) => this.setState({password})
+                }
+                placeholder="密码"
+                placeholderTextColor="white"/>
+            </Item>
             <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: heightPercentage(20)
+                marginTop: heightPercentage(10)
               }}>
               <TouchableOpacity onPress={this.onConfirm.bind(this)}>
                 <Image
