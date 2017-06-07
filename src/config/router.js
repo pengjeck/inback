@@ -12,8 +12,10 @@ import React, {Component} from 'react'
 import InitScreen from '../components/initScreen/initScreen'
 import Catalog from '../components/catalog/catalog'
 import Login from '../components/login/login'
-import RegisterRoot from './registerRouter'
-// import Register from '../components/register/register'
+import Register from '../components/register/register'
+import AdultInfo from '../components/register/adultInfo/adultInfo'
+import ChildInfo from '../components/register/childInfo/childInfo'
+import AccountInfo from '../components/register/accountInfo/accountInfo'
 export const Root = StackNavigator(
   {
     InitScreen: {
@@ -25,9 +27,18 @@ export const Root = StackNavigator(
     Login: {
       screen: Login,
     },
-    RegisterRoot: {
-      screen: RegisterRoot,
-    }
+    Register: {
+      screen: Register,
+    },
+    AdultInfo: {
+      screen: AdultInfo
+    },
+    ChildInfo: {
+      screen: ChildInfo
+    },
+    AccountInfo: {
+      screen: AccountInfo
+    },
   },
   {
     initialRouteName: 'InitScreen',

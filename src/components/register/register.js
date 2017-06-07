@@ -68,11 +68,11 @@ export default class Register extends Component {
     Alert.alert('温馨提醒', '是否保存密码?', [{
       text: '取消', onPress: () => {
         // ToastAndroid.show('go back', ToastAndroid.SHORT);
-        upperThis.props.navigation.navigate('Catalog');
+        upperThis.props.navigation.goBack();
       }
     }, {
       text: '确定', onPress: () => {
-        upperThis.props.navigation.navigate('Catalog');
+        upperThis.props.navigation.goBack();
       }
     }]);
   }
