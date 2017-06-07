@@ -13,7 +13,7 @@ import InitScreen from '../components/initScreen/initScreen'
 import Catalog from '../components/catalog/catalog'
 import Login from '../components/login/login'
 import RegisterRoot from './registerRouter'
-
+// import Register from '../components/register/register'
 export const Root = StackNavigator(
   {
     InitScreen: {
@@ -26,6 +26,7 @@ export const Root = StackNavigator(
       screen: Login,
     },
     RegisterRoot: {
+      // # TODO: [bug]进入到register之后需要返回两次才能顺利回到初始界面
       screen: RegisterRoot,
     }
   },

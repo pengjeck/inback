@@ -84,7 +84,7 @@ export default class AdultInfo extends Component {
       ToastAndroid.show(message, ToastAndroid.SHORT);
       return;
     }
-    this.props.navigation.navigate('RegisterRoot');
+    this.props.navigation.navigate('Register');
     DeviceEventEmitter.emit('RegisterAdultInfo', {
       ...this.state
     });

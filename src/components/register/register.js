@@ -28,6 +28,14 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     DeviceEventEmitter.addListener('RegisterAdultInfo', (obj) => {
+      // TODO: you can do the register some
+      Alert.alert(
+        '提示',
+        JSON.stringify(obj)
+      )
+    });
+
+    DeviceEventEmitter.addListener('RegisterChildInfo', (obj) => {
       Alert.alert(
         '提示',
         JSON.stringify(obj)
