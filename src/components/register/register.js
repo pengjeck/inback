@@ -6,15 +6,11 @@ import {
   Image,
   View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  DeviceEventEmitter,
+  Alert,
+  ToastAndroid
 } from 'react-native'
-import {
-  Input,
-  Text,
-  Button,
-  Container,
-  Content,
-} from 'native-base'
 
 import React, {
   Component
@@ -29,6 +25,16 @@ import {
 
 
 export default class Register extends Component {
+  constructor(props) {
+    super(props);
+    DeviceEventEmitter.addListener('RegisterAdultInfo', (obj) => {
+      Alert.alert(
+        '提示',
+        JSON.stringify(obj)
+      )
+    })
+  }
+
   render() {
     return (
       <View>
