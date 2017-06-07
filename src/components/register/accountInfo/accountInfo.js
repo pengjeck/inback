@@ -11,7 +11,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
-  DeviceEventEmitter
 } from 'react-native'
 import {
   Input,

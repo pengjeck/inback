@@ -6,9 +6,9 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  BackAndroid
+  BackHandler
 } from 'react-native'
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   viewportWidth,
   viewportHeight,
@@ -18,19 +18,14 @@ import {
 
 export default class Catalog extends Component {
   register() {
-    this.props.navigation.navigate('Register')
+    this.props.navigation.navigate('Register');
   }
 
   login() {
     console.log('pressed');
-    this.props.navigation.navigate('Login')
+    this.props.navigation.navigate('Login');
   }
   componentDidMount() {
-    // 定义返回按钮的事件。
-    // 如果想让程序有更好的易用性，最好能给每一个screen都定义一下物理按钮的返回事件。
-    BackAndroid.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.navigate('InitScreen')
-    });
   }
 
   render() {
@@ -42,33 +37,37 @@ export default class Catalog extends Component {
           <View style={styles.container}>
             <View style={styles.rowFirst}>
               <Image style={styles.b1WhatsInBack}
-                     source={require('./images/1.png')}/>
+                source={require('./images/1.png')} />
             </View>
             <View style={styles.rowSecond}>
-              <Image style={styles.b2Know }
-                     source={require('./images/2.png')}>
-              </Image>
+              <Image style={styles.b2Know}
+                source={require('./images/2.png')} />
               <Image style={styles.b3Recall}
-                     source={require('./images/3.png')}/>
+                source={require('./images/3.png')} />
             </View>
             <View style={styles.rowThird}>
-              <Image style={styles.b4Gossip }
-                     source={require('./images/4.png')}>
-              </Image>
+              <Image style={styles.b4Gossip}
+                source={require('./images/4.png')} />
               <Image style={styles.b5Heart}
-                     source={require('./images/5.png')}/>
+                source={require('./images/5.png')} />
             </View>
 
             <View style={styles.rowFourth}>
-              <TouchableOpacity style={styles.bRegister}
-                                onPress={this.register.bind(this)}>
+              <TouchableOpacity
+                style={{
+                  height: heightPercentage(7)
+                }}
+                onPress={this.register.bind(this)}>
                 <Image style={styles.bRegister}
-                       source={require('./images/7.png')}/>
+                  source={require('./images/7.png')} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.bLogin}
-                                onPress={this.login.bind(this)}>
+              <TouchableOpacity
+                style={{
+                  height: heightPercentage(7),
+                }}
+                onPress={this.login.bind(this)}>
                 <Image style={styles.bLogin}
-                       source={require('./images/6.png')}/>
+                  source={require('./images/6.png')} />
               </TouchableOpacity>
             </View>
           </View>

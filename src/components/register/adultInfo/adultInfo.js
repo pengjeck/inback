@@ -39,7 +39,9 @@ export default class AdultInfo extends Component {
   sliderWidth = 0;
   itemWidth = 0;
   itemHeight = 0;
-
+  
+  componentDidMount() {
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +58,7 @@ export default class AdultInfo extends Component {
   onGenderSelected(value) {
     this.setState((pre, props) => {
       console.log('pre: ' + pre.gender + '||' + 'new:' + value);
-      return {gender: value}
+      return { gender: value }
     })
   }
 
@@ -100,14 +102,14 @@ export default class AdultInfo extends Component {
     });
 
     let gender_props = [
-      {label: '男', value: 0},
-      {label: '女', value: 1}
+      { label: '男', value: 0 },
+      { label: '女', value: 1 }
     ];
 
     return (
       <View>
         <Image source={require('./background.png')}
-               style={styles.background}>
+          style={styles.background}>
           <View style={styles.container}>
             <Item style={{
               marginLeft: widthPercentage(5),
@@ -115,13 +117,13 @@ export default class AdultInfo extends Component {
               marginTop: heightPercentage(5)
             }}>
               <Icon name="ios-contact-outline"
-                    style={{color: 'white', fontSize: 28}}/>
+                style={{ color: 'white', fontSize: 28 }} />
               <Input
                 onChangeText={
-                  (name) => this.setState({name})
+                  (name) => this.setState({ name })
                 }
                 placeholder="姓名"
-                placeholderTextColor="white"/>
+                placeholderTextColor="white" />
             </Item>
             <Item style={{
               marginLeft: widthPercentage(5),
@@ -129,13 +131,13 @@ export default class AdultInfo extends Component {
               marginTop: heightPercentage(3)
             }}>
               <Icon name="ios-card-outline"
-                    style={{color: 'white', fontSize: 28}}/>
+                style={{ color: 'white', fontSize: 28 }} />
               <Input
                 onChangeText={
-                  (idCard) => this.setState({idCard})
+                  (idCard) => this.setState({ idCard })
                 }
                 placeholder="身份证号"
-                placeholderTextColor="white"/>
+                placeholderTextColor="white" />
             </Item>
             {/*  --------------- 性别  -----------------*/}
             <View style={{
@@ -150,7 +152,7 @@ export default class AdultInfo extends Component {
                 flexDirection: 'row',
               }}>
                 <Icon name="ios-transgender-outline"
-                      style={{color: 'white', fontSize: 28}}/>
+                  style={{ color: 'white', fontSize: 28 }} />
                 <Text style={{
                   color: 'white',
                   fontSize: 18,
@@ -177,14 +179,14 @@ export default class AdultInfo extends Component {
                         buttonSize={12}
                         buttonOuterSize={20}
                         buttonStyle={{}}
-                        buttonWrapStyle={{marginLeft: widthPercentage(5)}}
+                        buttonWrapStyle={{ marginLeft: widthPercentage(5) }}
                       />
                       <RadioButtonLabel
                         obj={gender_props[0]}
                         index={0}
                         labelHorizontal={true}
                         onPress={this.onGenderSelected.bind(this)}
-                        labelStyle={{fontSize: 20, color: 'white'}}
+                        labelStyle={{ fontSize: 20, color: 'white' }}
                         labelWrapStyle={{}}
                       />
 
@@ -199,14 +201,14 @@ export default class AdultInfo extends Component {
                         buttonSize={12}
                         buttonOuterSize={20}
                         buttonStyle={{}}
-                        buttonWrapStyle={{marginLeft: widthPercentage(3)}}
+                        buttonWrapStyle={{ marginLeft: widthPercentage(3) }}
                       />
                       <RadioButtonLabel
                         obj={gender_props[1]}
                         index={1}
                         labelHorizontal={true}
                         onPress={this.onGenderSelected.bind(this)}
-                        labelStyle={{fontSize: 20, color: 'white'}}
+                        labelStyle={{ fontSize: 20, color: 'white' }}
                         labelWrapStyle={{}}
                       />
                     </RadioButton>
@@ -227,7 +229,7 @@ export default class AdultInfo extends Component {
                   style={{
                     resizeMode: 'contain',
                     height: heightPercentage(9)
-                  }}/>
+                  }} />
               </TouchableOpacity>
             </View>
           </View>

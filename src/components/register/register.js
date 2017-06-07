@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
-  BackAndroid,
+  BackHandler,
   Alert
 } from 'react-native'
 
@@ -23,14 +23,13 @@ import {
   heightPercentage
 } from '../basic'
 
-import {AdultInfo} from '../../config/default'
+import { AdultInfo } from '../../config/default'
 export default class Register extends Component {
   // 组件被加载之后
   componentDidMount() {
-    // 解决了需要连续返回两次的情况
-    BackAndroid.addEventListener('hardwareBackPress', () => {
-      this.props.navigation.goBack();
-    })
+  }
+
+  componenetWillUnmount() {
   }
 
   // 构造函数
@@ -82,36 +81,36 @@ export default class Register extends Component {
     return (
       <View>
         <Image style={styles.background}
-               source={require('./images/background.png')}>
+          source={require('./images/background.png')}>
           <View style={styles.container}>
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
                 this.props.navigation.navigate('AdultInfo',
-                  {getAdultInfo: this.getAdultInfo.bind(this)})
+                  { getAdultInfo: this.getAdultInfo.bind(this) })
               }}>
               <Image style={styles.imageButton}
-                     source={require('./images/adultInfo.png')}>
+                source={require('./images/adultInfo.png')}>
               </Image>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
                 this.props.navigation.navigate('ChildInfo',
-                  {getChildInfo: this.getChildInfo.bind(this)})
+                  { getChildInfo: this.getChildInfo.bind(this) })
               }}>
               <Image style={styles.imageButton}
-                     source={require('./images/childInfo.png')}>
+                source={require('./images/childInfo.png')}>
               </Image>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
                 this.props.navigation.navigate('AccountInfo',
-                  {getAccountInfo: this.getAccountInfo.bind(this)})
+                  { getAccountInfo: this.getAccountInfo.bind(this) })
               }}>
               <Image style={styles.imageButton}
-                     source={require('./images/accountInfo.png')}>
+                source={require('./images/accountInfo.png')}>
               </Image>
             </TouchableOpacity>
             <TouchableOpacity
@@ -120,7 +119,7 @@ export default class Register extends Component {
               }]}
               onPress={this.onConfirm.bind(this)}>
               <Image style={[styles.imageButton]}
-                     source={require('./images/finishButton.png')}>
+                source={require('./images/finishButton.png')}>
               </Image>
             </TouchableOpacity>
           </View>
