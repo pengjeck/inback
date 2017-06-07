@@ -29,6 +29,7 @@ export default RegisterRoot = StackNavigator(
     },
   },
   {
+    initialRouteName: 'Register',
     navigationOptions: {
       header: null
     }

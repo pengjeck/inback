@@ -23,22 +23,41 @@ import {
   heightPercentage
 } from '../basic'
 
-
+import {AdultInfo} from '../../config/default'
 export default class Register extends Component {
+  // 组件被加载之后
+  componentDidMount() {
+  }
+
+  // 构造函数
   constructor(props) {
     super(props);
-    DeviceEventEmitter.addListener('RegisterAdultInfo', (obj) => {
-      // TODO: you can do the register some
-      ToastAndroid.show(JSON.stringify(obj),
-        ToastAndroid.SHORT,
-        ToastAndroid.TOP);
-    });
+  }
 
-    DeviceEventEmitter.addListener('RegisterChildInfo', (obj) => {
-      ToastAndroid.show(JSON.stringify(obj),
-        ToastAndroid.SHORT,
-        ToastAndroid.TOP);
-    })
+  getAdultInfo(name, idCard, gender) {
+    AdultInfo.name = name;
+    AdultInfo.idCard = idCard;
+    AdultInfo.gender = gender;
+    ToastAndroid.show(JSON.stringify(AdultInfo),
+      ToastAndroid.SHORT, ToastAndroid.TOP)
+  }
+
+  getChildInfo(name, idCard, gender) {
+    AdultInfo.childInfo = {
+      name,
+      idCard,
+      gender
+    };
+    ToastAndroid.show(JSON.stringify(AdultInfo),
+      ToastAndroid.SHORT, ToastAndroid.TOP)
+  }
+
+  getAccountInfo(nickName, gender, phoneNum) {
+    AdultInfo.phoneNum = phoneNum;
+    AdultInfo.nickName = nickName;
+    AdultInfo.gender = gender;
+    ToastAndroid.show(JSON.stringify(AdultInfo),
+      ToastAndroid.SHORT, ToastAndroid.TOP)
   }
 
   render() {
@@ -50,7 +69,8 @@ export default class Register extends Component {
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
-                this.props.navigation.navigate('AdultInfo')
+                this.props.navigation.navigate('AdultInfo',
+                  {getAdultInfo: this.getAdultInfo.bind(this)})
               }}>
               <Image style={styles.imageButton}
                      source={require('./images/adultInfo.png')}>
@@ -59,7 +79,8 @@ export default class Register extends Component {
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
-                this.props.navigation.navigate('ChildInfo')
+                this.props.navigation.navigate('ChildInfo',
+                  {getChildInfo: this.getChildInfo.bind(this)})
               }}>
               <Image style={styles.imageButton}
                      source={require('./images/childInfo.png')}>
@@ -68,7 +89,8 @@ export default class Register extends Component {
             <TouchableOpacity
               style={styles.card}
               onPress={() => {
-                this.props.navigation.navigate('AccountInfo')
+                this.props.navigation.navigate('AccountInfo',
+                  {getAccountInfo: this.getAccountInfo.bind(this)})
               }}>
               <Image style={styles.imageButton}
                      source={require('./images/accountInfo.png')}>

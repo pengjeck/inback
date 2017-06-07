@@ -8,8 +8,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   DeviceEventEmitter,
-  // NativeAppEventEmitter,
-  // NativeEventEmitter,
   ToastAndroid,
 } from 'react-native'
 import {
@@ -17,9 +15,7 @@ import {
   Text,
   Icon,
   Item,
-  Button,
 } from 'native-base'
-import Carousel from 'react-native-snap-carousel'
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
@@ -37,10 +33,6 @@ import {
   heightPercentage
 } from '../../basic'
 
-import {
-  userInfo
-} from '../../../config/default'
-
 export default class AdultInfo extends Component {
   horizontalMargin = 20;
   _carousel = null;
@@ -51,7 +43,7 @@ export default class AdultInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '彭某',
+      name: '新名字',
       idCard: '360428199605295555',
       gender: 1,
     };
@@ -69,19 +61,17 @@ export default class AdultInfo extends Component {
   }
 
   onConfirm() {
-    // this.setState({idCard: '360428199605295555'});
-    // this.setState({phoneNum: '12345678912'});
-
     if (this.state.idCard.length !== 18) {
       let message = "请检查您的身份证号码";
       ToastAndroid.show(message, ToastAndroid.SHORT);
       return;
     }
-
-    this.props.navigation.navigate('Register');
-    DeviceEventEmitter.emit('RegisterAdultInfo', {
-      ...this.state
-    });
+    this.props.navigation.state.params.getAdultInfo(
+      this.state.name,
+      this.state.idCard,
+      this.state.gender
+    );
+    this.props.navigation.goBack();
   }
 
   render() {

@@ -31,6 +31,7 @@ export const Root = StackNavigator(
     }
   },
   {
+    initialRouteName: 'InitScreen',
     navigationOptions: {
       header: null
     }

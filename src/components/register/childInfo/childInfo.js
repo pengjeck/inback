@@ -50,7 +50,7 @@ export default class AdultInfo extends Component {
     this.state = {
       gender: 1,
       idCard: '360428199605295333',
-      name: ''
+      name: '新小孩的名字'
     };
 
     this._carousel = null;
@@ -71,10 +71,12 @@ export default class AdultInfo extends Component {
       ToastAndroid.show('请检查身份证号码', ToastAndroid.SHORT);
       return;
     }
-    DeviceEventEmitter.emit('RegisterChildInfo', {
-      ...this.state
-    });
-    this.props.navigation.navigate('Register')
+    this.props.navigation.state.params.getChildInfo(
+      this.state.name,
+      this.state.idCard,
+      this.state.gender
+    );
+    this.props.navigation.goBack();
   }
 
   render() {

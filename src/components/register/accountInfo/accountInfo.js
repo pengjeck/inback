@@ -42,7 +42,7 @@ export default class AdultInfo extends Component {
     super(props);
     this.state = {
       phoneNum: '12345678912',
-      nickName: '',
+      nickName: '新昵称',
       password: '1234'
     };
 
@@ -55,13 +55,22 @@ export default class AdultInfo extends Component {
   onConfirm() {
     // this.setState({idCard: '360428199605295333'});
     if (this.state.phoneNum.length !== 11) {
-      ToastAndroid.show('请检查手机号码', ToastAndroid.SHORT);
+      ToastAndroid.show('请检查手机号码',
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP);
       return;
     }
-    DeviceEventEmitter.emit('RegisterChildInfo', {
-      ...this.state
-    });
-    this.props.navigation.navigate('Register')
+    if (this.state.phoneNum.length === 0) {
+      ToastAndroid.show('请输入密码',
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP)
+    }
+    this.props.navigation.state.params.getAccountInfo(
+      this.state.nickName,
+      this.state.gender,
+      this.state.phoneNum
+    );
+    this.props.navigation.goBack()
   }
 
   render() {
