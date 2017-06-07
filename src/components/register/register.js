@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   BackAndroid,
+  Alert
 } from 'react-native'
 
 import React, {
@@ -63,6 +64,20 @@ export default class Register extends Component {
       ToastAndroid.SHORT, ToastAndroid.TOP)
   }
 
+  onConfirm() {
+    let upperThis = this;
+    Alert.alert('温馨提醒', '是否保存密码?', [{
+      text: '取消', onPress: () => {
+        // ToastAndroid.show('go back', ToastAndroid.SHORT);
+        upperThis.props.navigation.navigate('Catalog');
+      }
+    }, {
+      text: '确定', onPress: () => {
+        upperThis.props.navigation.navigate('Catalog');
+      }
+    }]);
+  }
+
   render() {
     return (
       <View>
@@ -99,14 +114,11 @@ export default class Register extends Component {
                      source={require('./images/accountInfo.png')}>
               </Image>
             </TouchableOpacity>
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-            }}/>
             <TouchableOpacity
-              style={styles.card}
-              onPress={() => {
-              }}>
+              style={[styles.card, {
+                marginTop: widthPercentage(8)
+              }]}
+              onPress={this.onConfirm.bind(this)}>
               <Image style={[styles.imageButton]}
                      source={require('./images/finishButton.png')}>
               </Image>

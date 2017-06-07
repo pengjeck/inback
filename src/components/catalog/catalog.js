@@ -5,7 +5,8 @@ import {
   Image,
   StyleSheet,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  BackAndroid
 } from 'react-native'
 import React, {Component} from 'react'
 import {
@@ -15,11 +16,6 @@ import {
   heightPercentage
 } from '../basic'
 
-/**
- *
-
- */
-
 export default class Catalog extends Component {
   register() {
     this.props.navigation.navigate('Register')
@@ -28,6 +24,13 @@ export default class Catalog extends Component {
   login() {
     console.log('pressed');
     this.props.navigation.navigate('Login')
+  }
+  componentDidMount() {
+    // 定义返回按钮的事件。
+    // 如果想让程序有更好的易用性，最好能给每一个screen都定义一下物理按钮的返回事件。
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.navigate('InitScreen')
+    });
   }
 
   render() {
