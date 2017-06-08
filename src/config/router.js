@@ -16,6 +16,7 @@ import Register from '../components/register/register'
 import AdultInfo from '../components/register/adultInfo/adultInfo'
 import ChildInfo from '../components/register/childInfo/childInfo'
 import AccountInfo from '../components/register/accountInfo/accountInfo'
+import Home from '../components/home/home'
 export const Root = StackNavigator(
   {
     InitScreen: {
@@ -38,6 +39,9 @@ export const Root = StackNavigator(
     },
     AccountInfo: {
       screen: AccountInfo
+    },
+    Home: {
+      screen: Home
     },
   },
   {

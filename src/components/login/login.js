@@ -6,7 +6,8 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid,
 } from 'react-native'
 import React, { Component } from 'react'
 import {
@@ -28,17 +29,20 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phoneNum: '',
-      password: '',
+      phoneNum: '13006305269',
+      password: '1234',
     };
   }
 
   login() {
-    console.log(this.state.phoneNum + ":" + this.state.password);
     if (this.state.phoneNum === '13006305269' &&
-      this.state.password === '123') {
-      // TODO: 跳转到哪里？
-      this.props.navigation.navigate('')
+      this.state.password === '1234') {
+      this.props.navigation.navigate('Home');
+    } else {
+      ToastAndroid.show('用户名或密码错误',
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP);
+      return;
     }
   }
 
@@ -54,33 +58,27 @@ export default class Login extends Component {
                   <Item style={{
                     marginLeft: widthPercentage(5),
                     marginRight: widthPercentage(5),
-                    }}>
+                  }}>
                     <Icon name="home"
                       style={{ color: 'white' }} />
                     <Input
                       onChangeText={
-                        (text) => {
-                          this.setState((pre, props) => {
-                            return { phoneNum: text }
-                          });
-                          console.log(text);
+                        (phoneNum) => {
+                          this.setState({ phoneNum });
                         }
                       }
-                      value={this.state.phoneNum}
                       placeholder="手机号" placeholderTextColor='white' />
                   </Item>
 
                   <Item style={{
                     marginLeft: widthPercentage(5),
                     marginRight: widthPercentage(5),
-                    }}>
+                  }}>
                     <Icon name="md-key"
                       style={{ color: 'white' }} />
                     <Input
-                      onChangeText={(text) => {
-                        this.setState((pre, props) => {
-                          return { password: text }
-                        });
+                      onChangeText={(password) => {
+                        this.setState({ password });
                         console.log(text)
                       }}
                       placeholder="密码" placeholderTextColor='white' />
@@ -92,8 +90,6 @@ export default class Login extends Component {
                   </TouchableOpacity>
                 </Content>
               </Container>
-            </View>
-            <View style={{}}>
             </View>
           </View>
         </Image>
