@@ -33,7 +33,9 @@ import {
 } from '../basic.js'
 
 import Address from './address/address'
-
+import Project from './project/project'
+import Insurance from './insurance/insurance'
+import Order from './order/order'
 /**
  * 场景配置
  */
@@ -95,14 +97,11 @@ export default class Home extends Component {
     if (this.state.screenName === Screen.address) {
       MainContent = Address;
     } else if (this.state.screenName === Screen.project) {
-      MainContent = Address;
-
+      MainContent = Project;
     } else if (this.state.screenName === Screen.insurance) {
-      MainContent = Address;
-
+      MainContent = Insurance;
     } else if (this.state.screenName === Screen.order) {
-      MainContent = Address;
-
+      MainContent = Order;
     } else {
       MainContent = Address;
     }
@@ -119,7 +118,7 @@ export default class Home extends Component {
         <Footer>
           <FooterTab
             style={{
-              backgroundColor: '#ff9991',
+              backgroundColor: '#ff9972',
             }}>
             <Button
               onPress={() => this.setState({ screenName: Screen.address })}
