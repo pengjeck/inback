@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  KeyboardAvoidingView,
 } from 'react-native'
 import React, { Component } from 'react'
 import {
@@ -48,89 +49,64 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View>
-        <Image style={styles.background}
-          source={require('./images/background.png')}>
-          <View style={styles.container}>
-            <View style={styles.form}>
-              <Container>
-                <Content>
-                  <Item style={{
-                    marginLeft: widthPercentage(5),
-                    marginRight: widthPercentage(5),
-                  }}>
-                    <Icon name="home"
-                      style={{ color: 'white' }} />
-                    <Input
-                      onChangeText={
-                        (phoneNum) => {
-                          this.setState({ phoneNum });
-                        }
-                      }
-                      placeholder="手机号" placeholderTextColor='white' />
-                  </Item>
+      <KeyboardAvoidingView behavior='position'>
+        <Image source={require('./images/background.png')}
+          style={{
+            width: viewportWidth,
+            height: viewportHeight,
+          }}>
+          <View style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignContent: 'center',
+            marginTop: heightPercentage(35),
+          }}>
+            {/* --- 输入手机号 --- */}
+            <Item style={{
+              marginLeft: widthPercentage(5),
+              marginRight: widthPercentage(5),
+            }}>
+              <Icon name="home"
+                style={{ color: 'white' }} />
+              <Input placeholder="手机号" placeholderTextColor='white'
+                onChangeText={
+                  (phoneNum) => {
+                    this.setState({ phoneNum });
+                  }
+                } />
+            </Item>
 
-                  <Item style={{
-                    marginLeft: widthPercentage(5),
-                    marginRight: widthPercentage(5),
-                  }}>
-                    <Icon name="md-key"
-                      style={{ color: 'white' }} />
-                    <Input
-                      onChangeText={(password) => {
-                        this.setState({ password });
-                        console.log(text)
-                      }}
-                      placeholder="密码" placeholderTextColor='white' />
-                  </Item>
-                  <TouchableOpacity onPress={this.login.bind(this)}
-                    style={styles.loginButton}>
-                    <Image style={styles.loginButtonImage}
-                      source={require('./images/loginButton.png')} />
-                  </TouchableOpacity>
-                </Content>
-              </Container>
+            {/* --- 输入密码 --- */}
+            <Item style={{
+              marginLeft: widthPercentage(5),
+              marginRight: widthPercentage(5),
+            }}>
+              <Icon name="md-key"
+                style={{ color: 'white' }} />
+              <Input placeholder="密码" placeholderTextColor='white'
+                onChangeText={(password) => {
+                  this.setState({ password });
+                }} />
+            </Item>
+
+            {/* 登录按钮 */}
+            <View style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: heightPercentage(2),
+            }}>
+              <TouchableOpacity onPress={this.login.bind(this)}>
+                <Image source={require('./images/loginButton.png')}
+                  style={{
+                    resizeMode: 'center',
+                    height: heightPercentage(8),
+                  }} />
+              </TouchableOpacity>
             </View>
           </View>
         </Image>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  background: {
-    width: viewportWidth,
-    height: viewportHeight
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    // width: widthPercentage(96)
-  },
-  form: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: heightPercentage(54)
-  },
-  bottom: {
-    flex: 1,
-  },
-
-  // region >>>>>>> elements >>>>>>>
-  loginButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  loginButtonImage: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(8),
-    width: widthPercentage(80),
-  }
-  // endregion <<<<<<<< elements <<<<<<
-});
