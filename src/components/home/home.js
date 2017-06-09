@@ -57,11 +57,12 @@ class Screen {
 }
 
 export default class Home extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       screenName: Screen.address
-    }
+    };
   }
 
   switchScreen(index) {
@@ -74,6 +75,34 @@ export default class Home extends Component {
    */
   isActive(screenName) {
     return this.state.screenName === screenName
+  }
+
+  onSubmitOrder() {
+    this.props.navigation.navigate('Talk');
+  }
+
+  switchScreen() {
+    if (this.state.screenName === Screen.address) {
+      return (
+        <Address />
+      )
+    } else if (this.state.screenName === Screen.project) {
+      return (
+        <Project />
+      )
+    } else if (this.state.screenName === Screen.insurance) {
+      return (
+        <Insurance />
+      )
+    } else if (this.state.screenName === Screen.order) {
+      return (
+        <Order callbackSubmit={this.onSubmitOrder.bind(this)} />
+      )
+    } else {
+      return (
+        <Address />
+      )
+    }
   }
 
   render() {
@@ -93,18 +122,7 @@ export default class Home extends Component {
         color: 'white',
       }
     });
-    let MainContent = null;
-    if (this.state.screenName === Screen.address) {
-      MainContent = Address;
-    } else if (this.state.screenName === Screen.project) {
-      MainContent = Project;
-    } else if (this.state.screenName === Screen.insurance) {
-      MainContent = Insurance;
-    } else if (this.state.screenName === Screen.order) {
-      MainContent = Order;
-    } else {
-      MainContent = Address;
-    }
+
     return (
       <Container style={{
         height: viewportHeight,
@@ -112,7 +130,7 @@ export default class Home extends Component {
         flex: 1,
       }}>
         <Content>
-          <MainContent />
+          {this.switchScreen()}
         </Content>
         {/*  ------ 底部一栏  -------*/}
         <Footer>
@@ -125,7 +143,7 @@ export default class Home extends Component {
               active={this.isActive(Screen.address)}>
               <Icon
                 active={this.isActive(Screen.address)}
-                name="ios-time-outline"/>
+                name="ios-time-outline" />
               <Text style={styles.footerTabText}>
                 地点
               </Text>
@@ -146,7 +164,7 @@ export default class Home extends Component {
               active={this.isActive(Screen.insurance)}>
               <Icon
                 active={this.isActive(Screen.insurance)}
-                name="ios-contact-outline"/>
+                name="ios-contact-outline" />
               <Text style={styles.footerTabText}>
                 保险
               </Text>

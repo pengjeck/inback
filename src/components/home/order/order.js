@@ -459,7 +459,7 @@ export default class Order extends Component {
                 <View style={{
                   flex: 1,
                 }}>
-                  <Text>王大娘已经接单，正在晶尽快前往，请等待...</Text>
+                  <Text> {WorkerInfo.name}已经接单，正在晶尽快前往，请等待...</Text>
                 </View>
 
               </View>
@@ -469,7 +469,8 @@ export default class Order extends Component {
                   style={styles.btnHide}
                   onPress={() => {
                     // 准备跳转
-                    this.setState({ waitingModalVisible: false })
+                    this.setWorkerInfoModalVisible(false);
+                    this.props.callbackSubmit();
                   }}>
                   <Text style={{
                     fontSize: 20,

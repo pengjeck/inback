@@ -17,6 +17,8 @@ import AdultInfo from '../components/register/adultInfo/adultInfo'
 import ChildInfo from '../components/register/childInfo/childInfo'
 import AccountInfo from '../components/register/accountInfo/accountInfo'
 import Home from '../components/home/home'
+import Talk from '../components/talk/talk'
+
 export const Root = StackNavigator(
   {
     InitScreen: {
@@ -43,6 +45,9 @@ export const Root = StackNavigator(
     Home: {
       screen: Home
     },
+    Talk: {
+      screen: Talk,
+    }
   },
   {
     initialRouteName: 'InitScreen',
