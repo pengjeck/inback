@@ -37,7 +37,166 @@ import {
   WorkerInfo
 } from '../data.js'
 
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel
+} from 'react-native-simple-radio-button';
+
+
 export default class Talk extends Component {
+  static Reasons = [
+    { label: '态度不好', value: 0 },
+    { label: '半天没接到孩子', value: 1 },
+    { label: '另有安排', value: 2 },
+    { label: '其他原因', value: 3 },
+  ];
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      screenName: 'chat',
+      cancelReason: 2,   // 默认取消订单的原因是另有安排
+    }
+  }
+  /**
+   * 选择取消的原因
+   */
+  onCancelReasonSelected(value) {
+    this.setState({ cancelReason: value })
+  }
+
+  /**
+   * 得到一个单选的按钮
+   * @param {*int} index 
+   */
+  getRadio(index) {
+    return (
+      <RadioButton style={{
+        marginBottom: 10,
+      }}
+        labelHorizontal={true} key={index}>
+        <RadioButtonInput
+          obj={Talk.Reasons[index]}
+          index={index}
+          isSelected={this.state.cancelReason === index}
+          onPress={this.onCancelReasonSelected.bind(this)}
+          borderWidth={2}
+          buttonInnerColor={'white'}
+          buttonOuterColor={this.state.cancelReason === index ? '#2196f3' : 'white'}
+          buttonSize={12}
+          buttonOuterSize={20}
+          buttonStyle={{}}
+          buttonWrapStyle={{ marginLeft: widthPercentage(5) }}
+        />
+        <RadioButtonLabel
+          obj={Talk.Reasons[index]}
+          index={index}
+          labelHorizontal={true}
+          onPress={this.onCancelReasonSelected.bind(this)}
+          labelStyle={{ fontSize: 20, color: 'white' }}
+          labelWrapStyle={{}}
+        />
+      </RadioButton>
+    )
+  }
+
+  cancelScreen() {
+    return (
+      <View style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+        <Text style={{
+          color: 'gray',
+          fontSize: 18,
+        }}>超过两分钟取消订单收费3元</Text>
+        <Text style={{
+          color: 'gray',
+          fontSize: 18,
+          marginBottom: 10,
+          marginTop: 10,
+        }}>取消原因：</Text>
+        <View style={{
+          flex: 1,
+          marginBottom: 20,
+        }}>
+          <RadioForm
+            animation={true}>
+            {Talk.Reasons.map((item) => {
+              return this.getRadio(item.value)
+            })}
+          </RadioForm>
+        </View>
+        <TouchableOpacity onPress={() => {
+            this.props.navigation.navigate('Home'); // 这是可以传参数的。
+          }}>
+          <Image source={require('../home/order/confirmButton.png')}
+            style={{
+              height: heightPercentage(8),
+              resizeMode: 'contain',
+            }} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  chatScreen() {
+    return (
+      <View>
+        {/* ---- 聊天内容 ---- */}
+        <View style={{
+          flex: 4,
+          height: heightPercentage(46),
+        }}>
+        </View>
+
+        <View style={{
+          height: heightPercentage(7),
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#f9f9f9'
+        }}>
+          <Icon name='ios-volume-up-outline'
+            style={{
+              color: 'gray',
+              marginLeft: 5,
+              marginRight: 5,
+            }} />
+          <Item rounded style={{
+            height: heightPercentage(5),
+            flex: 1,
+          }}>
+            <Input placeholder='' />
+          </Item>
+          <Icon name='ios-happy-outline'
+            style={{
+              color: 'gray',
+              marginLeft: 5,
+            }} />
+          <Icon name='md-add'
+            style={{
+              color: 'gray',
+              marginLeft: 5,
+              marginRight: 5,
+            }} />
+        </View>
+      </View>
+    )
+  }
+
+  switchScreen() {
+    if (this.state.screenName === 'chat') {
+      return this.chatScreen();
+    } else if (this.state.screenName === 'cancelOrder') {
+      return this.cancelScreen();
+    }
+  }
+
   render() {
     let styles = StyleSheet.create({
       footerTabText: {
@@ -149,54 +308,27 @@ export default class Talk extends Component {
                     width: widthPercentage(40),
                     marginRight: widthPercentage(5),
                   }} source={require('./talkButton.png')} />
-
-                  <Image style={{
-                    resizeMode: 'contain',
-                    width: widthPercentage(40),
-                    marginLeft: widthPercentage(5),
-                  }} source={require('./cancelOrder.png')} />
+                  <TouchableOpacity onPress={() => {
+                    let upperThis = this;
+                    Alert.alert('提醒', '确认是否取消订单', [{
+                      text: '取消', onPress: () => {
+                        console.log('不取消订单');
+                      }
+                    }, {
+                      text: '确定', onPress: () => {
+                        upperThis.setState({ screenName: 'cancelOrder' })
+                      }
+                    }]);
+                  }}>
+                    <Image style={{
+                      resizeMode: 'contain',
+                      width: widthPercentage(40),
+                      marginLeft: widthPercentage(5),
+                    }} source={require('./cancelOrder.png')} />
+                  </TouchableOpacity>
                 </View>
               </View>
-
-              {/* ---- 聊天内容 ---- */}
-              <View style={{
-                flex: 4,
-                height: heightPercentage(46),
-              }}>
-              </View>
-
-              <View style={{
-                height: heightPercentage(7),
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#f9f9f9'
-              }}>
-                <Icon name='ios-volume-up-outline'
-                  style={{
-                    color: 'gray',
-                    marginLeft: 5,
-                    marginRight: 5,
-                  }} />
-                <Item rounded style={{
-                  height: heightPercentage(5),
-                  flex: 1,
-                }}>
-                  <Input placeholder='' />
-                </Item>
-                <Icon name='ios-happy-outline'
-                  style={{
-                    color: 'gray',
-                    marginLeft: 5,
-                  }} />
-                <Icon name='md-add'
-                  style={{
-                    color: 'gray',
-                    marginLeft: 5,
-                    marginRight: 5,
-                  }} />
-              </View>
+              {this.switchScreen()}
             </View>
           </Content>
 

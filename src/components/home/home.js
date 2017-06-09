@@ -181,9 +181,7 @@ export default class Home extends Component {
             </Button>
           </FooterTab>
         </Footer>
-
       </Container>
-
     )
   }
 }

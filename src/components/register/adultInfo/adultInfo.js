@@ -89,11 +89,6 @@ export default class AdultInfo extends Component {
         width: viewportWidth,
         height: viewportHeight,
         marginTop: heightPercentage(30),
-        // paddingBottom: heightPercentage(10),
-        // marginBottom: heightPercentage()
-        // marginBottom: heightPercentage(20)
-        // marginLeft: widthPercentage(8),
-        // marginRight: widthPercentage(5)
       },
       slide: {
         width: this.itemWidth,
