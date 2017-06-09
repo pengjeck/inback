@@ -43,6 +43,7 @@ import RadioForm, {
   RadioButtonLabel
 } from 'react-native-simple-radio-button';
 
+import { GiftedChat } from 'react-native-gifted-chat';
 
 export default class Talk extends Component {
   static Reasons = [
@@ -52,11 +53,28 @@ export default class Talk extends Component {
     { label: '其他原因', value: 3 },
   ];
 
+  componentWillMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: '你好，正在前往',
+          createdAt: new Date(Date.UTC(2017, 6, 9, 5, 20, 0)),
+          user: {
+            _id: 2,
+            name: WorkerInfo.name,
+          },
+        },
+      ],
+    });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       screenName: 'chat',
       cancelReason: 2,   // 默认取消订单的原因是另有安排
+      messages: []
     }
   }
   /**
@@ -101,6 +119,9 @@ export default class Talk extends Component {
     )
   }
 
+  /**
+   * 取消订单需要渲染的内容
+   */
   cancelScreen() {
     return (
       <View style={{
@@ -131,8 +152,8 @@ export default class Talk extends Component {
           </RadioForm>
         </View>
         <TouchableOpacity onPress={() => {
-            this.props.navigation.navigate('Home'); // 这是可以传参数的。
-          }}>
+          this.props.navigation.navigate('Home'); // 这是可以传参数的。
+        }}>
           <Image source={require('../home/order/confirmButton.png')}
             style={{
               height: heightPercentage(8),
@@ -143,47 +164,32 @@ export default class Talk extends Component {
     )
   }
 
+  onSend(messages = []) {
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
+  }
+
+  /**
+   * 聊天需要渲染的内容
+   */
   chatScreen() {
     return (
       <View>
         {/* ---- 聊天内容 ---- */}
         <View style={{
-          flex: 4,
+          flex: 5,
           height: heightPercentage(46),
         }}>
-        </View>
-
-        <View style={{
-          height: heightPercentage(7),
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#f9f9f9'
-        }}>
-          <Icon name='ios-volume-up-outline'
-            style={{
-              color: 'gray',
-              marginLeft: 5,
-              marginRight: 5,
-            }} />
-          <Item rounded style={{
-            height: heightPercentage(5),
-            flex: 1,
-          }}>
-            <Input placeholder='' />
-          </Item>
-          <Icon name='ios-happy-outline'
-            style={{
-              color: 'gray',
-              marginLeft: 5,
-            }} />
-          <Icon name='md-add'
-            style={{
-              color: 'gray',
-              marginLeft: 5,
-              marginRight: 5,
-            }} />
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={this.onSend.bind(this)}
+            user={{
+              _id: 1,
+            }}
+          />
         </View>
       </View>
     )
@@ -228,7 +234,11 @@ export default class Talk extends Component {
                 justifyContent: 'flex-start',
                 height: heightPercentage(10),
               }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={
+                  () => {
+                    this.props.navigation.navigate('Home');
+                  }
+                }>
                   <Image style={{
                     resizeMode: 'contain',
                     width: widthPercentage(45),
