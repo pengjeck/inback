@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native'
 import React, { Component } from 'react'
 import {
@@ -49,7 +50,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior='position'>
+      <ScrollView scrollEnabled={false} >
         <Image source={require('./images/background.png')}
           style={{
             width: viewportWidth,
@@ -106,7 +107,7 @@ export default class Login extends Component {
             </View>
           </View>
         </Image>
-      </KeyboardAvoidingView>
+      </ScrollView>
     )
   }
 }

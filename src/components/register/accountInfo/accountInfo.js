@@ -1,16 +1,15 @@
 /**
  * Created by pj on 17-6-5.
  */
-/**
- * Created by pj on 17-6-5.
- */
-
 import {
   Image,
   View,
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
+  KeyboardAvoidingView,
+  Keyboard,
+  ScrollView,
 } from 'react-native'
 import {
   Input,
@@ -31,12 +30,6 @@ import {
 
 
 export default class AdultInfo extends Component {
-  horizontalMargin = 20;
-  _carousel = null;
-  sliderWidth = 0;
-  itemWidth = 0;
-  itemHeight = 0;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -44,11 +37,7 @@ export default class AdultInfo extends Component {
       nickName: '新昵称',
       password: '1234'
     };
-
-    this._carousel = null;
-    this.sliderWidth = widthPercentage(90);
-    this.itemWidth = this.sliderWidth + this.horizontalMargin * 2;
-    this.itemHeight = heightPercentage(60);
+    this._scrollView;
   }
 
   onConfirm() {
@@ -73,96 +62,86 @@ export default class AdultInfo extends Component {
   }
 
   render() {
-    const styles = StyleSheet.create({
-      background: {
-        width: viewportWidth,
-        height: viewportHeight
-      },
-      container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        width: viewportWidth,
-        height: viewportHeight,
-        marginTop: heightPercentage(20),
-        // paddingBottom: heightPercentage(10),
-        // marginBottom: heightPercentage()
-        // marginBottom: heightPercentage(20)
-        // marginLeft: widthPercentage(8),
-        // marginRight: widthPercentage(5)
-      },
-      slide: {
-        width: this.itemWidth,
-        height: this.itemHeight
-      }
-    });
-
     return (
-      <View>
+      <ScrollView scrollEnabled={false}>
         <Image source={require('./background.png')}
-               style={styles.background}>
-          <View style={styles.container}>
-            <Item style={{
-              marginLeft: widthPercentage(5),
-              marginRight: widthPercentage(5),
-              marginTop: heightPercentage(5)
+          style={{
+            height: viewportHeight,
+            width: viewportWidth
+          }}>
+          <View style={{
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+            <View style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: heightPercentage(30),
             }}>
-              <Icon name="ios-contact-outline"
-                    style={{color: 'white', fontSize: 28}}/>
-              <Input
-                onChangeText={
-                  (nickName) => this.setState({nickName})
-                }
-                placeholder="用户名"
-                placeholderTextColor="white"/>
-            </Item>
-            <Item style={{
-              marginLeft: widthPercentage(5),
-              marginRight: widthPercentage(5),
-              marginTop: heightPercentage(3)
-            }}>
-              <Icon name="ios-card-outline"
-                    style={{color: 'white', fontSize: 28}}/>
-              <Input
-                onChangeText={
-                  (phoneNum) => this.setState({phoneNum})
-                }
-                placeholder="电话号码"
-                placeholderTextColor="white"/>
-            </Item>
-            <Item style={{
-              marginLeft: widthPercentage(5),
-              marginRight: widthPercentage(5),
-              marginTop: heightPercentage(3)
-            }}>
-              <Icon name="ios-unlock-outline"
-                    style={{color: 'white', fontSize: 28}}/>
-              <Input
-                onChangeText={
-                  (password) => this.setState({password})
-                }
-                placeholder="密码"
-                placeholderTextColor="white"/>
-            </Item>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: heightPercentage(10)
+              <Item style={{
+                width: widthPercentage(80),
               }}>
-              <TouchableOpacity onPress={this.onConfirm.bind(this)}>
+                <Icon name="ios-contact-outline"
+                  style={{ color: 'white', fontSize: 28 }} />
+                <Input
+                  onChangeText={
+                    (nickName) => this.setState({ nickName })
+                  }
+                  placeholder="用户名"
+                  placeholderTextColor="white" />
+              </Item>
+
+              <Item style={{
+                width: widthPercentage(80),
+              }}>
+                <Icon name="ios-card-outline"
+                  style={{ color: 'white', fontSize: 28 }} />
+                <Input
+                  placeholder="电话号码"
+                  placeholderTextColor="white"
+                  onChangeText={
+                    (phoneNum) => this.setState({ phoneNum })
+                  } />
+              </Item>
+
+              <Item style={{
+                width: widthPercentage(80),
+              }}>
+                <Icon name="ios-unlock-outline"
+                  style={{ color: 'white', fontSize: 28 }} />
+                <Input
+                  onChangeText={
+                    (password) => this.setState({ password })
+                  }
+                  placeholder="密码"
+                  placeholderTextColor="white" />
+              </Item>
+            </View>
+
+            {/*  ---- 确定按钮 ---- */}
+            <View style={{
+              flex: 3,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: heightPercentage(2),
+            }}>
+              <TouchableOpacity style={{
+                height: heightPercentage(20),
+              }}
+               onPress={this.onConfirm.bind(this)}>
                 <Image
                   source={require('./confirmButton.png')}
                   style={{
                     resizeMode: 'contain',
-                    height: heightPercentage(9)
-                  }}/>
+                    width: widthPercentage(70),
+                  }} />
               </TouchableOpacity>
             </View>
           </View>
         </Image>
-      </View>
+      </ScrollView>
     )
   }
 }
