@@ -37,6 +37,10 @@ import {
   heightPercentage
 } from '../../basic.js'
 
+import {
+  WorkerInfo
+} from '../../data.js'
+
 export default class Order extends Component {
   /**
    * 所有的年龄区间
@@ -74,7 +78,8 @@ export default class Order extends Component {
       gender: 1,  // 性别要求，1: 男性，2: 女性
       ageRangeIndex: 0,
       gradeIndex: 0,
-      waitingModalVisible: false,  // 默认模块不可见
+      waitingModalVisible: false,  // 默认等待的窗口不可见
+      workerInfoModalVisible: false,  // 员工信息的窗口
     }
   }
 
@@ -250,10 +255,75 @@ export default class Order extends Component {
 
   _onConfirm() {
     this.setWaitingModalVisible(true);
+    // 一秒钟之后模拟有接单的人
+    let upperThis = this;
+    setTimeout(function () {
+      upperThis.setWaitingModalVisible(false);
+      upperThis.setWorkerInfoModalVisible(true);
+    }, 1000);
   }
 
   setWaitingModalVisible(visible) {
     this.setState({ waitingModalVisible: visible });
+  }
+
+  setWorkerInfoModalVisible(visible) {
+    this.setState({ workerInfoModalVisible: visible })
+  }
+
+  showStars(mark) {
+    let full = (key) => {
+      return <Icon key={key}
+        name='ios-star'
+        style={{
+          color: 'yellow',
+          fontSize: 24,
+        }} />
+    };
+
+    let half = (key) => {
+      return <Icon key={key}
+        name='ios-star-half'
+        style={{
+          color: 'yellow',
+          fontSize: 24,
+        }} />
+    }
+
+    let empty = (key) => {
+      return <Icon key={key}
+        name='ios-star-outline'
+        style={{
+          fontSize: 24,
+        }} />
+    };
+    let fullCount = parseInt(mark / 2);
+    let haveHalf = mark % 2 === 1;
+    let emptyCount = parseInt((10 - mark) / 2);
+
+    let stars = [];
+    for (let i = 0; i < fullCount; i++) {
+      stars.push(full(i));
+    }
+    if (haveHalf) {
+      stars.push(half(fullCount * 2 + 1));
+    }
+    for (let i = 0; i < emptyCount; i++) {
+      start.push(empty(fullCount * 2 + (haveHalf ? 1 : 0) + i));
+    }
+
+    return (
+      <View style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+      }}>
+        {
+          stars.map((item) => {
+            return item
+          })
+        }
+      </View>
+    )
   }
 
   render() {
@@ -304,7 +374,114 @@ export default class Order extends Component {
       <View style={{
         flex: 1,
       }}>
-        {/*==== 弹出窗口 ====*/}
+        {/* ====== 接单人的信息 ======*/}
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.workerInfoModalVisible}
+          onRequestClose={() => {
+            console.log("<== modal has been closed.");
+            this.setWorkerInfoModalVisible(false)
+          }}>
+          <View style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <View style={{
+              width: widthPercentage(96),
+              height: heightPercentage(40),
+              backgroundColor: '#ccc',
+              borderRadius: 5,
+            }}>
+              <View style={styles.message}>
+                <View style={{
+                  flex: 3,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}>
+                  <View style={{
+                    flex: 3,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}>
+                    <Image style={{
+                      width: 80,
+                      resizeMode: 'contain',
+                    }}
+                      source={require('./headIcon.png')} />
+                  </View>
+
+                  <View style={{
+                    flex: 10,
+                    marginLeft: 30,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}>
+                    <Text style={{ color: 'gray' }}> {WorkerInfo.name} </Text>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                      <Icon name='ios-paper-plane-outline' style={{
+                        fontSize: 24,
+                        color: 'gray',
+                      }} />
+                      <Text style={{
+                        flex: 1,
+                        color: 'gray',
+                        marginRight: 3,
+                      }}> {WorkerInfo.distance} </Text>
+
+                      <Icon name='ios-person-outline' style={{
+                        fontSize: 24,
+                        color: 'gray',
+                      }} />
+                      <Text style={{
+                        flex: 1, color: 'gray'
+                      }}> {WorkerInfo.age} </Text>
+                      <View style={{
+                        flex: 3,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}>
+                        <Icon name='ios-create-outline' style={{
+                          fontSize: 24,
+                          color: 'gray',
+                        }} />
+                        {this.showStars(9)}
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={{
+                  flex: 1,
+                }}>
+                  <Text>王大娘已经接单，正在晶尽快前往，请等待...</Text>
+                </View>
+
+              </View>
+
+              <View style={styles.bottomView}>
+                <TouchableOpacity
+                  style={styles.btnHide}
+                  onPress={() => {
+                    // 准备跳转
+                    this.setState({ waitingModalVisible: false })
+                  }}>
+                  <Text style={{
+                    fontSize: 20,
+                  }}>开始会话</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
+        {/*==== 等待弹出窗口 ====*/}
         <Modal
           animationType={'none'}
           transparent={true}
@@ -335,6 +512,7 @@ export default class Order extends Component {
           </View>
         </Modal>
 
+        {/* ===== 实际界面显示的内容 =====*/}
         <Image source={require('./background.png')}
           style={{
             flex: 1,
