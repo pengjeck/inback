@@ -4,6 +4,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Modal
 } from 'react-native';
 
 import React, {
@@ -61,6 +62,10 @@ export default class Order extends Component {
     '研究生'
   ]
 
+  /**
+   * 构造函数
+   * @param {*object} props 
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -68,7 +73,8 @@ export default class Order extends Component {
       endTime: null,
       gender: 1,  // 性别要求，1: 男性，2: 女性
       ageRangeIndex: 0,
-      gradeIndex: 0
+      gradeIndex: 0,
+      waitingModalVisible: false,  // 默认模块不可见
     }
   }
 
@@ -242,6 +248,14 @@ export default class Order extends Component {
     Picker.show();
   }
 
+  _onConfirm() {
+    this.setWaitingModalVisible(true);
+  }
+
+  setWaitingModalVisible(visible) {
+    this.setState({ waitingModalVisible: visible });
+  }
+
   render() {
     let styles = StyleSheet.create({
       separator: {
@@ -253,21 +267,80 @@ export default class Order extends Component {
       partSelectedContent: {
         fontSize: 14,
         color: 'white'
-      }
+      },
+      modalView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      centerView: {
+        width: 200,
+        height: 120,
+        backgroundColor: '#ccc',
+        borderRadius: 5,
+      },
+      message: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 3,
+      },
+      bottomView: {
+        flex: 1,
+        flexDirection: 'row',
+        borderTopWidth: 2,
+        borderColor: '#fff',
+        marginTop: 4,
+      },
+      btnHide: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRightWidth: 0.5,
+        borderColor: '#fff',
+      },
     });
 
     return (
       <View style={{
         flex: 1,
       }}>
+        {/*==== 弹出窗口 ====*/}
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.waitingModalVisible}
+          onRequestClose={() => {
+            console.log("<== modal has been closed.");
+            this.setState({ waitingModalVisible: false });
+          }}>
+          <View style={styles.modalView}>
+            <View style={styles.centerView}>
+              <View style={styles.message}>
+                <Text style={{
+                }}
+                >正在为您寻找接单者</Text>
+                <Text>请稍等...</Text>
+              </View>
+
+              <View style={styles.bottomView}>
+                <TouchableOpacity
+                  style={styles.btnHide}
+                  onPress={() => {
+                    this.setState({ waitingModalVisible: false })
+                  }}>
+                  <Text>确定</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
         <Image source={require('./background.png')}
           style={{
             flex: 1,
             resizeMode: 'stretch'
           }}>
           <Content style={{
-            color: 'transparent',
-            backgroundColor: 'transparent',
             marginTop: heightPercentage(2),
           }}>
             <Card style={{
@@ -533,12 +606,12 @@ export default class Order extends Component {
               marginLeft: widthPercentage(5),
               marginRight: widthPercentage(5),
             }}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this._onConfirm.bind(this)}>
                 <Image source={require('./confirmButton.png')}
                   style={{
                     resizeMode: 'contain',
                     height: heightPercentage(8),
-                  }}/>
+                  }} />
               </TouchableOpacity>
             </View>
           </Content>
