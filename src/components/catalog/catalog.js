@@ -9,6 +9,12 @@ import {
   BackHandler
 } from 'react-native'
 import React, { Component } from 'react'
+
+import {
+  Container,
+  Content,
+} from 'native-base'
+
 import {
   viewportWidth,
   viewportHeight,
@@ -25,134 +31,135 @@ export default class Catalog extends Component {
     console.log('pressed');
     this.props.navigation.navigate('Login');
   }
-  componentDidMount() {
-  }
 
   render() {
     return (
-      <View style={styles.pack}>
-        <Image
-          style={styles.background}
-          source={require('./images/background.png')}>
-          <View style={styles.container}>
-            <View style={styles.rowFirst}>
-              <Image style={styles.b1WhatsInBack}
-                source={require('./images/1.png')} />
-            </View>
-            <View style={styles.rowSecond}>
-              <Image style={styles.b2Know}
-                source={require('./images/2.png')} />
-              <Image style={styles.b3Recall}
-                source={require('./images/3.png')} />
-            </View>
-            <View style={styles.rowThird}>
-              <Image style={styles.b4Gossip}
-                source={require('./images/4.png')} />
-              <Image style={styles.b5Heart}
-                source={require('./images/5.png')} />
+      <Image source={require('./images/background.png')}
+        style={{
+          width: viewportWidth,
+          height: viewportHeight
+        }} >
+        <View style={{
+          flex: 1,
+        }}>
+          {/* 顶部的空隙 */}
+          <View style={{ flex: 1 }}></View>
+          {/* 第一行 */}
+          <View style={{
+            flex: 2,
+            alignItems: 'center',
+          }}>
+            <Image source={require('./images/1.png')}
+              style={{
+                resizeMode: 'contain',
+                height: heightPercentage(20),
+              }} />
+          </View>
+
+          {/* 第二行*/}
+          <View style={{
+            flex: 2,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <Image source={require('./images/2.png')}
+                style={{
+                  resizeMode: 'contain',
+                  height: heightPercentage(20),
+                }} />
             </View>
 
-            <View style={styles.rowFourth}>
-              <TouchableOpacity
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <Image source={require('./images/3.png')}
                 style={{
-                  height: heightPercentage(7)
-                }}
-                onPress={this.register.bind(this)}>
-                <Image style={styles.bRegister}
-                  source={require('./images/7.png')} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  height: heightPercentage(7),
-                }}
-                onPress={this.login.bind(this)}>
-                <Image style={styles.bLogin}
-                  source={require('./images/6.png')} />
-              </TouchableOpacity>
+                  resizeMode: 'contain',
+                  height: heightPercentage(20),
+                }} />
             </View>
           </View>
-        </Image>
-      </View>
+
+          {/* 第三行 */}
+          <View style={{
+            flex: 2,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <Image source={require('./images/4.png')}
+                style={{
+                  resizeMode: 'contain',
+                  height: heightPercentage(20),
+                }} />
+            </View>
+
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <Image source={require('./images/5.png')}
+                style={{
+                  resizeMode: 'contain',
+                  height: heightPercentage(20),
+                }} />
+            </View>
+          </View>
+
+          {/*  --- 注册|登录 --- */}
+          <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <TouchableOpacity
+                onPress={this.register.bind(this)}>
+                <Image source={require('./images/7.png')}
+                  style={{
+                    resizeMode: 'contain',
+                    width: widthPercentage(20),
+                  }} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+              <TouchableOpacity
+                onPress={this.login.bind(this)}>
+                <Image source={require('./images/6.png')}
+                  style={{
+                    resizeMode: 'contain',
+                    width: widthPercentage(20),
+                  }} />
+              </TouchableOpacity>
+
+            </View>
+          </View>
+          {/* 底部的空隙 */}
+          <View style={{ flex: 1 }}></View>
+        </View>
+      </Image>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  pack: {
-    flex: 1
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: viewportWidth,
-    height: viewportHeight,
-    // marginLeft: widthPercentage(1),
-    // marginRight: widthPercentage(1)
-  },
-  background: {
-    width: viewportWidth,
-    height: viewportHeight
-  },
-  rowFirst: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: heightPercentage(8),
-    marginBottom: heightPercentage(3),
-  },
-  rowSecond: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: heightPercentage(1),
-  },
-  rowThird: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  rowFourth: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: heightPercentage(5),
-  },
-  // region >>>>>>>>>>>> buttons >>>>>>>>>
-  bRegister: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(7)
-  },
-  bLogin: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(7)
-  },
-  b1WhatsInBack: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(22)
-  },
-  b2Know: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(20)
-  },
-  b3Recall: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(20),
-  },
-  b4Gossip: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(20),
-  },
-  b5Heart: {
-    flex: 1,
-    resizeMode: 'contain',
-    height: heightPercentage(20),
-  }
-  // endregion <<<<<<<< buttons <<<<<<<<<
-});
