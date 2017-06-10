@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native'
 
 import React, {
@@ -213,165 +214,164 @@ export default class Talk extends Component {
       }
     });
     return (
-      <Container>
-        <Image source={require('./background.png')}
-          style={{
-            flex: 1,
-            resizeMode: 'stretch',
-            width: viewportWidth
-          }}>
-          <Content>
-            <View style={{
+      <ScrollView scrollEnabled={false}>
+        <Container>
+          <Image source={require('./background.png')}
+            style={{
               flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
+              resizeMode: 'stretch',
+              width: viewportWidth
             }}>
-              {/*  ---  top tabs --- */}
+            <Content>
               <View style={{
                 flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                height: heightPercentage(10),
-              }}>
-                <TouchableOpacity onPress={
-                  () => {
-                    this.props.navigation.navigate('Home');
-                  }
-                }>
-                  <Image style={{
-                    resizeMode: 'contain',
-                    width: widthPercentage(45),
-                  }}
-                    source={require('./backButton.png')} />
-                </TouchableOpacity>
-              </View>
-
-              {/*  ---- 员工信息 ----- */}
-              <View style={{
-                flex: 4,
                 flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 15,
+                justifyContent: 'flex-start',
               }}>
-                <View style={{
-                  flex: 4,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: heightPercentage(11),
-                }}>
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                    <Image source={require('../home/order/headIcon.png')}
-                      style={{
-                        flex: 1,
-                        resizeMode: 'contain',
-                        height: heightPercentage(10),
-                      }} />
-
-                    <View style={{
-                      flex: 1,
-                    }}>
-                      <Text style={{
-                        color: 'white',
-                        fontSize: 20,
-                      }}>{WorkerInfo.name}</Text>
-                      <Text style={{
-                        color: 'white',
-                      }}>{WorkerInfo.describe}</Text>
-                    </View>
-                  </View>
-
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}>
-                    <Text style={{
-                      color: 'white',
-                    }}>{WorkerInfo.age} , {WorkerInfo.job}</Text>
-                    <Text style={{
-                      color: 'white',
-                    }}>{WorkerInfo.interest.map((item) => {
-                      return item + '  ';
-                    })}</Text>
-                    <Text style={{
-                      color: 'white',
-                    }}>已完成{WorkerInfo.finishedOrder}单</Text>
-                  </View>
-                </View>
-
-                {/*  --- 回话和取消订单按钮 ---*/}
+                {/*  ---  top tabs --- */}
                 <View style={{
                   flex: 1,
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
                   alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  height: heightPercentage(10),
                 }}>
-                  <Image style={{
-                    resizeMode: 'contain',
-                    width: widthPercentage(40),
-                    marginRight: widthPercentage(5),
-                  }} source={require('./talkButton.png')} />
-                  <TouchableOpacity onPress={() => {
-                    let upperThis = this;
-                    Alert.alert('提醒', '确认是否取消订单', [{
-                      text: '取消', onPress: () => {
-                        console.log('不取消订单');
-                      }
-                    }, {
-                      text: '确定', onPress: () => {
-                        upperThis.setState({ screenName: 'cancelOrder' })
-                      }
-                    }]);
+                  <TouchableOpacity onPress={
+                    () => {this.props.navigation.navigate('Home');}
+                  }>
+                    <Image style={{
+                      resizeMode: 'contain',
+                      width: widthPercentage(45),
+                    }}
+                      source={require('./backButton.png')} />
+                  </TouchableOpacity>
+                </View>
+
+                {/*  ---- 员工信息 ----- */}
+                <View style={{
+                  flex: 4,
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 15,
+                }}>
+                  <View style={{
+                    flex: 4,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: heightPercentage(11),
+                  }}>
+                    <View style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                      <Image source={require('../home/order/headIcon.png')}
+                        style={{
+                          flex: 1,
+                          resizeMode: 'contain',
+                          height: heightPercentage(10),
+                        }} />
+
+                      <View style={{
+                        flex: 1,
+                      }}>
+                        <Text style={{
+                          color: 'white',
+                          fontSize: 20,
+                        }}>{WorkerInfo.name}</Text>
+                        <Text style={{
+                          color: 'white',
+                        }}>{WorkerInfo.describe}</Text>
+                      </View>
+                    </View>
+
+                    <View style={{
+                      flex: 1,
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                      <Text style={{
+                        color: 'white',
+                      }}>{WorkerInfo.age} , {WorkerInfo.job}</Text>
+                      <Text style={{
+                        color: 'white',
+                      }}>{WorkerInfo.interest.map((item) => {
+                        return item + '  ';
+                      })}</Text>
+                      <Text style={{
+                        color: 'white',
+                      }}>已完成{WorkerInfo.finishedOrder}单</Text>
+                    </View>
+                  </View>
+
+                  {/*  --- 回话和取消订单按钮 ---*/}
+                  <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                   }}>
                     <Image style={{
                       resizeMode: 'contain',
                       width: widthPercentage(40),
-                      marginLeft: widthPercentage(5),
-                    }} source={require('./cancelOrder.png')} />
-                  </TouchableOpacity>
+                      marginRight: widthPercentage(5),
+                    }} source={require('./talkButton.png')} />
+                    <TouchableOpacity onPress={() => {
+                      let upperThis = this;
+                      Alert.alert('提醒', '确认是否取消订单', [{
+                        text: '取消', onPress: () => {
+                          console.log('不取消订单');
+                        }
+                      }, {
+                        text: '确定', onPress: () => {
+                          upperThis.setState({ screenName: 'cancelOrder' })
+                        }
+                      }]);
+                    }}>
+                      <Image style={{
+                        resizeMode: 'contain',
+                        width: widthPercentage(40),
+                        marginLeft: widthPercentage(5),
+                      }} source={require('./cancelOrder.png')} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                {this.switchScreen()}
               </View>
-              {this.switchScreen()}
-            </View>
-          </Content>
+            </Content>
 
-          <Footer>
-            <FooterTab style={{
-              backgroundColor: '#ff9972'
-            }}>
-              <Button>
-                <Icon style={{ color: 'white' }}
-                  name="ios-alert-outline" />
-                <Text style={styles.footerTabText}>
-                  投诉
+            <Footer>
+              <FooterTab style={{
+                backgroundColor: '#ff9972'
+              }}>
+                <Button>
+                  <Icon style={{ color: 'white' }}
+                    name="ios-alert-outline" />
+                  <Text style={styles.footerTabText}>
+                    投诉
                   </Text>
-              </Button>
-              <Button>
-                <Icon style={{ color: 'white' }}
-                  name="ios-mic-outline" />
-                <Text style={styles.footerTabText}>
-                  语音通话
+                </Button>
+                <Button>
+                  <Icon style={{ color: 'white' }}
+                    name="ios-mic-outline" />
+                  <Text style={styles.footerTabText}>
+                    语音通话
                   </Text>
-              </Button>
-              <Button>
-                <Icon style={{ color: 'white' }}
-                  name="ios-videocam-outline" />
-                <Text style={styles.footerTabText}>
-                  视频通话
+                </Button>
+                <Button>
+                  <Icon style={{ color: 'white' }}
+                    name="ios-videocam-outline" />
+                  <Text style={styles.footerTabText}>
+                    视频通话
                   </Text>
-              </Button>
-            </FooterTab>
-          </Footer>
-        </Image>
-
-      </Container>
+                </Button>
+              </FooterTab>
+            </Footer>
+          </Image>
+        </Container>
+      </ScrollView>
     )
   }
 }

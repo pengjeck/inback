@@ -85,7 +85,9 @@ export default class Login extends Component {
             }}>
               <Icon name="md-key"
                 style={{ color: 'white' }} />
-              <Input placeholder="密码" placeholderTextColor='white'
+              <Input placeholder="密码"
+                placeholderTextColor='white'
+                secureTextEntry={true}
                 onChangeText={(password) => {
                   this.setState({ password });
                 }} />

@@ -36,6 +36,7 @@ import Address from './address/address'
 import Project from './project/project'
 import Insurance from './insurance/insurance'
 import Order from './order/order'
+
 /**
  * 场景配置
  */
@@ -61,7 +62,14 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screenName: Screen.address
+      screenName: Screen.address,
+      inAddress: {},
+      outAddress: {},
+      homework: '',
+      out: '',
+      interest: '',
+      isPay: false,
+      price: 0,
     };
   }
 
@@ -81,22 +89,35 @@ export default class Home extends Component {
     this.props.navigation.navigate('Talk');
   }
 
+  onGetAddresses(addresses) {
+    this.setState({ inAddress: addresses[0] })
+    this.setState({ outAddress: addresses[1] })
+  }
+  onGetProjects(projects) {
+    this.setState({ ...projects })
+  }
+
+  onGetInsuranceInfo(info) {
+    this.setState({ ...info })
+  }
+
   switchScreen() {
     if (this.state.screenName === Screen.address) {
       return (
-        <Address />
+        <Address submitAddress={this.onGetAddresses.bind(this)} />
       )
     } else if (this.state.screenName === Screen.project) {
       return (
-        <Project />
+        <Project submitProjects={this.onGetProjects.bind(this)} />
       )
     } else if (this.state.screenName === Screen.insurance) {
       return (
-        <Insurance />
+        <Insurance submitInfo={this.onGetAddresses.bind(this)} />
       )
     } else if (this.state.screenName === Screen.order) {
       return (
-        <Order callbackSubmit={this.onSubmitOrder.bind(this)} />
+        <Order callbackSubmit={this.onSubmitOrder.bind(this)}
+          {...this.state} />
       )
     } else {
       return (

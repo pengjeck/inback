@@ -97,9 +97,16 @@ android {
         }
     }
     // region by pjzero
+
     signingConfigs {
+        // debug {
+        //     storeFile file("/home/pj/pro/android/inback/android/my-release-key.keystore")
+        //     storePassword MYAPP_RELEASE_STORE_PASSWORD
+        //     keyAlias MYAPP_RELEASE_KEY_ALIAS
+        //     keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        // }
         release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storeFile file("/home/pj/pro/android/inback/android/my-release-key.keystore")
             storePassword MYAPP_RELEASE_STORE_PASSWORD
             keyAlias MYAPP_RELEASE_KEY_ALIAS
             keyPassword MYAPP_RELEASE_KEY_PASSWORD

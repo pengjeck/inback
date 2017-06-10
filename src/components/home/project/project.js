@@ -48,11 +48,9 @@ export default class Project extends Component {
   }
 
   _showHomeworkPicker() {
-    let grade = ['幼儿园', '小学', '初中'];
     let homeworks = ['语文', '数学', '外语'];
-    let pickerData = [grade, homeworks];
+    let pickerData = [homeworks];
     let selectedValue = [
-      [grade[0]],
       [homeworks[0]]
     ];
     Picker.init({
@@ -61,13 +59,14 @@ export default class Project extends Component {
       pickerTitleText: '作业辅导',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
+        this.setState({ homework: pickedValue })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerCancel: pickedValue => {
-        console.log('area', pickedValue);
+        this.setState({ homework: '' })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerSelect: pickedValue => {
-        console.log('area', pickedValue);
       }
     });
     Picker.show();
@@ -85,13 +84,14 @@ export default class Project extends Component {
       pickerTitleText: '兴趣培养',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log(pickedValue);
+        this.setState({ interest: pickedValue })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerCancel: pickedValue => {
-        console.log('area', pickedValue);
+        this.setState({ interest: '' })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerSelect: pickedValue => {
-        console.log('area', pickedValue);
       }
     });
     Picker.show();
@@ -108,13 +108,14 @@ export default class Project extends Component {
       pickerTitleText: '外出游玩',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
+        this.setState({ out: pickedValue })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerCancel: pickedValue => {
-        console.log('area', pickedValue);
+        this.setState({ out: '' })
+        this.props.submitProjects({ ...this.state })
       },
       onPickerSelect: pickedValue => {
-        console.log('area', pickedValue);
       }
     });
     Picker.show();
@@ -171,10 +172,10 @@ export default class Project extends Component {
               </CardItem>
             </Card>
             <Card style={{
-                width: widthPercentage(90),
-                marginLeft: widthPercentage(5),
-                marginRight: widthPercentage(5)
-              }}>
+              width: widthPercentage(90),
+              marginLeft: widthPercentage(5),
+              marginRight: widthPercentage(5)
+            }}>
               <CardItem header button
                 onPress={this._showInterestPicker.bind(this)}>
                 <Text style={{
@@ -194,10 +195,10 @@ export default class Project extends Component {
               </CardItem>
             </Card>
             <Card style={{
-                width: widthPercentage(90),
-                marginLeft: widthPercentage(5),
-                marginRight: widthPercentage(5)
-              }}>
+              width: widthPercentage(90),
+              marginLeft: widthPercentage(5),
+              marginRight: widthPercentage(5)
+            }}>
               <CardItem header button
                 onPress={this._showOutPicker.bind(this)}>
                 <Text style={{

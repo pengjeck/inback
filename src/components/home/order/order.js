@@ -76,7 +76,7 @@ export default class Order extends Component {
       begTime: null,
       endTime: null,
       gender: 1,  // 性别要求，1: 男性，2: 女性
-      ageRangeIndex: 0,
+      ageRangeIndex: 6,
       gradeIndex: 0,
       waitingModalVisible: false,  // 默认等待的窗口不可见
       workerInfoModalVisible: false,  // 员工信息的窗口
@@ -84,11 +84,22 @@ export default class Order extends Component {
   }
 
   _stateGrade2Text() {
+    console.log(this.state.gradeIndex);
     return Order._grades[this.state.gradeIndex]
   }
 
   _grade2Text(index) {
     return Order._grade2Text[index]
+  }
+
+  _grade2Index(text) {
+    if (text === Order._grades[0]) {
+      return 0
+    } else if (text === Order._grades[1]) {
+      return 1
+    } else if (text === Order._grades[2]) {
+      return 2
+    }
   }
 
   _gender2Text(index) {
@@ -129,13 +140,19 @@ export default class Order extends Component {
     let selectedValue = [
       [out[0]]
     ];
+    let upperThis = this;
     Picker.init({
       pickerData,
       selectedValue,
       pickerTitleText: '性别',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
+        let value = pickedValue[0];
+        if (value === '男') {
+          upperThis.setState({gender: 1})
+        } else if (value === '女') {
+          upperThis.setState({gender: 2})
+        }
       },
       onPickerCancel: pickedValue => {
         console.log('area', pickedValue);
@@ -153,7 +170,7 @@ export default class Order extends Component {
     });
     let pickerData = [out];
     let selectedValue = [
-      [out[0]]
+      [out[5]]
     ];
     Picker.init({
       pickerData,
@@ -161,7 +178,6 @@ export default class Order extends Component {
       pickerTitleText: '年龄',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
       },
       onPickerCancel: pickedValue => {
         console.log('area', pickedValue);
@@ -179,25 +195,32 @@ export default class Order extends Component {
     let selectedValue = [
       [out[0]]
     ];
+    let upperThis = this;
     Picker.init({
       pickerData,
       selectedValue,
       pickerTitleText: '学历',
       wheelFlex: [2, 2],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
+        if (value == '研究生') {
+          upperThis.setState({ gradeIndex: 2 })
+        } else if (value === '本科') {
+          upperThis.setState({ gradeIndex: 1 })
+        } else if (value === '大专') {
+          upperThis.setState({ gradeIndex: 0 })
+        } else {
+          console.log('error');
+        }
       },
       onPickerCancel: pickedValue => {
-        console.log('area', pickedValue);
       },
       onPickerSelect: pickedValue => {
-        console.log('area', pickedValue);
       }
     });
     Picker.show();
   }
 
-  _showTimePicker() {
+  _showTimePickerBeg() {
     let years = [],
       months = [],
       days = [],
@@ -223,18 +246,13 @@ export default class Order extends Component {
       [date.getHours() === 12 ? 12 : date.getHours() % 12],
       [date.getMinutes()]
     ];
+    let upperThis = this;
     Picker.init({
       pickerData,
       selectedValue,
-      pickerTitleText: '时间',
+      pickerTitleText: '开始时间',
       wheelFlex: [1, 1, 1, 1, 1],
       onPickerConfirm: pickedValue => {
-        console.log('area', pickedValue);
-      },
-      onPickerCancel: pickedValue => {
-        console.log('area', pickedValue);
-      },
-      onPickerSelect: pickedValue => {
         let targetValue = [...pickedValue];
         if (parseInt(targetValue[1]) === 2) {
           if (targetValue[0] % 4 === 0 && targetValue[2] > 29) {
@@ -247,7 +265,65 @@ export default class Order extends Component {
         else if (targetValue[1] in { 4: 1, 6: 1, 9: 1, 11: 1 } && targetValue[2] > 30) {
           targetValue[2] = 30;
         }
-        console.log(targetValue);
+        upperThis.setState({ begTime: targetValue[3] + ':' + targetValue[4] + targetValue[2] })
+      },
+      onPickerCancel: pickedValue => {
+      },
+      onPickerSelect: pickedValue => {
+      }
+    });
+    Picker.show();
+  }
+
+  _showTimePickerEnd() {
+    let years = [],
+      months = [],
+      days = [],
+      hours = [],
+      minutes = [];
+    for (let i = 1; i < 13; i++) {
+      months.push(i);
+      hours.push(i);
+    }
+    for (let i = 1; i < 32; i++) {
+      days.push(i);
+    }
+    for (let i = 1; i < 61; i++) {
+      minutes.push(i);
+    }
+    let pickerData = [months, days, ['am', 'pm'], hours, minutes];
+    let date = new Date();
+    let selectedValue = [
+      [date.getMonth() + 1],
+      [date.getDate()],
+      [date.getHours() > 11 ? 'pm' : 'am'],
+      [date.getHours() === 12 ? 12 : date.getHours() % 12],
+      [date.getMinutes()]
+    ];
+    let upperThis = this;
+    Picker.init({
+      pickerData,
+      selectedValue,
+      pickerTitleText: '结束时间',
+      wheelFlex: [1, 1, 1, 1, 1],
+      onPickerConfirm: pickedValue => {
+        let targetValue = [...pickedValue];
+        if (parseInt(targetValue[1]) === 2) {
+          if (targetValue[0] % 4 === 0 && targetValue[2] > 29) {
+            targetValue[2] = 29;
+          }
+          else if (targetValue[0] % 4 !== 0 && targetValue[2] > 28) {
+            targetValue[2] = 28;
+          }
+        }
+        else if (targetValue[1] in { 4: 1, 6: 1, 9: 1, 11: 1 } && targetValue[2] > 30) {
+          targetValue[2] = 30;
+        }
+        upperThis.setState({ endTime: targetValue[3] + ':' + targetValue[4] + targetValue[2] })
+      },
+      onPickerCancel: pickedValue => {
+      },
+      onPickerSelect: pickedValue => {
       }
     });
     Picker.show();
@@ -459,7 +535,7 @@ export default class Order extends Component {
                 <View style={{
                   flex: 1,
                 }}>
-                  <Text> {WorkerInfo.name}已经接单，正在晶尽快前往，请等待...</Text>
+                  <Text> {WorkerInfo.name}已经接单，正在尽快前往，请等待...</Text>
                 </View>
 
               </View>
@@ -480,7 +556,6 @@ export default class Order extends Component {
             </View>
           </View>
         </Modal>
-
 
         {/*==== 等待弹出窗口 ====*/}
         <Modal
@@ -569,12 +644,12 @@ export default class Order extends Component {
                       marginTop: 8,
                     }}>
                       {/* TODO: 选择开始的时间 */}
-                      <TouchableOpacity onPress={this._showTimePicker.bind(this)}>
+                      <TouchableOpacity onPress={this._showTimePickerBeg.bind(this)}>
                         <Text style={{
                           color: '#ff9972'
                         }}>
-                          {this.state.endTime == null ?
-                            '点击选择时间' : this.state.endTime}
+                          {this.state.begTime == null ?
+                            '点击选择时间' : this.state.begTime}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -602,12 +677,12 @@ export default class Order extends Component {
                       marginTop: 8,
                     }}>
                       {/* TODO: 选择结束的时间 */}
-                      <TouchableOpacity onPress={this._showTimePicker.bind(this)}>
+                      <TouchableOpacity onPress={this._showTimePickerEnd.bind(this)}>
                         <Text style={{
                           color: '#ff9972'
                         }}>
-                          {this.state.begTime == null ?
-                            '点击选择时间' : this.state.begTime}
+                          {this.state.endTime == null ?
+                            '点击选择时间' : this.state.endTime}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -755,21 +830,21 @@ export default class Order extends Component {
                       flexDirection: 'row',
                       justifyContent: 'center'
                     }}>
-                      <Text>小学数学</Text>
+                      <Text>{this.props.homework}</Text>
                     </View>
                     <View style={{
                       flex: 1,
                       flexDirection: 'row',
                       justifyContent: 'center'
                     }}>
-                      <Text>烹饪</Text>
+                      <Text>{this.props.interest}</Text>
                     </View>
                     <View style={{
                       flex: 1,
                       flexDirection: 'row',
                       justifyContent: 'center'
                     }}>
-                      <Text>图书城</Text>
+                      <Text>{this.props.out}</Text>
                     </View>
                   </View>
                 </View>
